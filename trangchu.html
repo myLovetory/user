@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chính</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Danh sách các kỳ thi</h1>
+        <input type="text" id="searchInput" placeholder="Tìm kiếm...">
+        <select id="statusFilter">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="free">Có thể truy cập tự do</option>
+            <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+        </select>
+        <ul id="examList">
+            <!-- Đây là danh sách các kỳ thi -->
+        </ul>
+    </div>
+
+    <!-- Thêm khung thông tin người dùng -->
+    <div class="user-info" id="userInfo">
+        <div class="avatar" onclick="showUserInfo()"></div> <!-- Thêm sự kiện onclick để hiển thị thông tin -->
+        <span id="usernameDisplay"></span>
+    </div>
+
+    <!-- Khung modal hiển thị thông tin người dùng -->
+    <div id="userModal" class="modal">
+        <div class="modal-content" id="userModalContent">
+            <span class="close" onclick="hideUserInfo()">&times;</span> <!-- Thêm nút đóng và sự kiện onclick -->
+            <!-- Đây là nơi hiển thị thông tin người dùng -->
+            <span id="userInfoDisplay"></span>
+            <button onclick="logout()">Đăng xuất</button> <!-- Thêm nút đăng xuất -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

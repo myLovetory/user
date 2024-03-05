@@ -1,0 +1,136 @@
+/* Các đối tượng trong trang */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Màu nền của trang */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto; /* Thêm margin trên và dưới */
+    padding: 20px;
+    background-color: #fff; /* Màu nền của khung container */
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+h1 {
+    text-align: center;
+}
+
+#searchInput,
+#statusFilter {
+    margin-bottom: 10px;
+    width: 100%; /* Đảm bảo rằng input và select điền vào toàn bộ width của container */
+    padding: 10px; /* Thêm padding */
+    border-radius: 5px; /* Bo góc */
+    border: 1px solid #ccc;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff; /* Màu nền của mỗi mục trong danh sách */
+}
+
+li:hover {
+    background-color: #f0f0f0;
+}
+
+#examList li a {
+    color: black;
+    text-decoration: none;
+}
+
+.user-info {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-image: url('https://inkythuatso.com/uploads/thumbnails/800/2023/03/1-anh-trang-den-meo-den-heinz-inkythuatso-02-16-04-57.jpg');
+    background-size: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#usernameDisplay {
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    width: 200px;
+    height: 150px;
+    border: 1px solid #888;
+    padding: 20px;
+    position: fixed;
+    top: 50px;
+    right: 70px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#userInfoDisplay {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#logoutButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#logoutButton:hover {
+    background-color: #d32f2f;
+}

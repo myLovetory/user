@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+<link rel="stylesheet" href="4.1astyles.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="logo" style="display: flex">
+        <img src="logo.png" style ="height: 10%;width: 10%; margin: 10px">
+        <div class="school">
+            <h2 style = "color:red; font-size: 20px;">HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG</h2>
+            <h3 style = "color:black; font-size: 16px;"> Posts and Telecommunications Institude of Technology </h3>
+        </div>
+    </div>
+    <form id="signupForm" onsubmit="return validateForm()">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <div style="display: block; text-align: center;">
+            <p id="passwordError" class="error"></p>
+            <button type="submit">Sign Up</button>
+        </div>
+        <p class="para-2">
+            Have an account? <a href="login.html">Sign in</a>
+        </p>
+    </form>
+</div>
+<script src="4.1ascript.js"></script>
+
+</body>
+</html>

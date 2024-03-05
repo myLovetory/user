@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Câu hỏi trắc nghiệm</title>
+  <link rel="stylesheet" type="text/css" href="stylebaithi.css">
+</head>
+<body>
+  <h1>Câu hỏi trắc nghiệm</h1>
+
+  <div id="questionContainer">
+    <h2>Câu hỏi:</h2>
+    <div id="questionsList"></div>
+    <button type="button" onclick="submitAnswers()">Nộp bài</button>
+  </div>
+
+  <div id="resultContainer" style="display: none;">
+    <h2>Kết quả bài làm</h2>
+    <div id="answersContainer"></div>
+  </div>
+
+  <script>
+    // JavaScript để xử lý logic và hiển thị câu hỏi, kết quả
+    const questionContainer = document.getElementById('questionContainer');
+    const resultContainer = document.getElementById('resultContainer');
+    const questionsList = document.getElementById('questionsList');
+    const answersContainer = document.getElementById('answersContainer');
+    let userAnswers = [];
+
+    // Danh sách các câu hỏi
+    const questions = [
+      {
+        question: "JavaScript là ngôn ngữ lập trình phía server.",
+        answer: "false",
+        type: "truefalse"
+      },
+      {
+        question: "CSS là viết tắt của Cascading Style Sheets.",
+        answer: "true",
+        type: "truefalse"
+      },
+      {
+        question: "HTML là ngôn ngữ đánh dấu siêu văn bản.",
+        answer: "true",
+        type: "truefalse"
+      },
+      {
+        question: "Chelsea có biểu tượng là con sư tử.",
+        answer: "true",
+        type: "truefalse"
+      },
+      {
+        question: "Công nghệ Blockchain được sử dụng trong việc tạo ra tiền điện tử Bitcoin.",
+        answer: "true",
+        type: "truefalse"
+      },
+      {
+        question: "Công ty Apple có trụ sở chính tại thành phố Los Angeles.",
+        answer: "false",
+        type: "truefalse"
+      },
+      {
+        question: "Mục đích của lưu thông hàng hóa giản đơn không phải là giá trị thặng dư.",
+        answer: "true",
+        type: "truefalse"
+      },
+      {
+        question: "Trong lưu thông, nếu hàng hóa được trao đổi không ngang giá (mua rẻ, bán đắt) thì cũng không tạo ra giá trị và giá trị thặng dư.",
+        answer: "true",
+        type: "truefalse"
+      },
+      {
+        question: "HTML là ngôn ngữ lập trình phía server.",
+        options: ["Đúng", "Sai"],
+        answer: "false",
+        type: "truefalse"
+      },
+      {
+        question: "Ai là người sáng lập Facebook?",
+        options: ["Mark Zuckerberg", "Bill Gates", "Jeff Bezos", "Elon Musk"],
+        answer: "Mark Zuckerberg",
+        type: "multiplechoice"
+      },
+      {
+        question: "Thủ đô của Pháp là thành phố nào?",
+        options: ["Berlin", "London", "Paris", "Rome"],
+        answer: "Paris",
+        type: "multiplechoice"
+      },
+      {
+        question: "Nước nào là quốc gia đông dân nhất thế giới?",
+        options: ["Ấn Độ", "Trung Quốc", "Mỹ", "Indonesia"],
+        answer: "Trung Quốc",
+        type: "multiplechoice"
+      },
+      {
+        question: "Bộ phim nào đã giành giải Oscar cho Phim xuất sắc nhất năm 2020?",
+        options: ["1917", "Parasite", "Joker", "The Irishman"],
+        answer: "Parasite",
+        type: "multiplechoice"
+      },
+      {
+        question: "Ngôn ngữ chính thức của Brazil là gì?",
+        options: ["Tây Ban Nha", "Bồ Đào Nha", "Pháp", "Ý"],
+        answer: "Bồ Đào Nha",
+        type: "multiplechoice"
+      },
+      {
+        question: "Element hóa học có ký hiệu là 'O' là gì?",
+        options: ["Oxygen", "Osmium", "Oganesson", "Oxytocin"],
+        answer: "Oxygen",
+        type: "multiplechoice"
+      },
+      {
+        question: "Ai là tác giả của cuốn sách 'Harry Potter'?",
+        options: ["J.R.R. Tolkien", "J.K. Rowling", "George R.R. Martin", "Suzanne Collins"],
+        answer: "J.K. Rowling",
+        type: "multiplechoice"
+      },
+      {
+        question: "Đỉnh núi cao nhất thế giới là gì?",
+        options: ["Everest", "Kilimanjaro", "Denali", "Alps"],
+        answer: "Everest",
+        type: "multiplechoice"
+      },
+      {
+        question: "Đội bóng nào đã giành chiến thắng trong World Cup 2018?",
+        options: ["Argentina", "Brazil", "Pháp", "Đức"],
+        answer: "Pháp",
+        type: "multiplechoice"
+      },
+      {
+        question: "Năm nào là năm đầu tiên con người đặt chân lên mặt trăng?",
+        options: ["1965", "1969", "1973", "1981"],
+        answer: "1969",
+        type: "multiplechoice"
+      },
+      {
+        question: "Chọn các quốc gia nằm ở châu Á:",
+        options: ["Việt Nam", "Thái Lan", "Mỹ", "Nhật Bản"],
+        answer: ["Việt Nam", "Thái Lan", "Nhật Bản"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các môn học thuộc ngành Khoa học máy tính:",
+        options: ["Toán", "Lập trình", "Văn", "Vật lý"],
+        answer: ["Lập trình", "Vật lý"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các thành phố nằm ở châu Âu:",
+        options: ["New York", "Paris", "Tokyo", "Moscow"],
+        answer: ["Paris", "Moscow"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các môn thể thao cá nhân:",
+        options: ["Bóng đá", "Bơi lội", "Quần vợt", "Đua xe"],
+        answer: ["Bơi lội", "Quần vợt"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các ngôn ngữ lập trình:",
+        options: ["Java", "HTML", "Tiếng Anh", "Python"],
+        answer: ["Java", "HTML", "Python"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các loài động vật sống ở nước biển:",
+        options: ["Hươu", "Cá heo", "Sóc", "Sao biển"],
+        answer: ["Cá heo", "Sao biển"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các quốc gia thuộc Liên minh châu Âu (EU):",
+        options: ["Hàn Quốc", "Pháp", "Nga", "Tây Ban Nha"],
+        answer: ["Pháp", "Tây Ban Nha"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các quốc gia nằm ở châu Phi:",
+        options: ["Tây Ban Nha", "Nam Phi", "Đức", "Mexico"],
+        answer: ["Nam Phi"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các môn thể thao đội:",
+        options: ["Bóng đá", "Bơi lội", "Quần vợt", "Đua xe"],
+        answer: ["Bóng đá"],
+        type: "multipleselect"
+      },
+      {
+        question: "Chọn các loại trái cây:",
+        options: ["Cà phê", "Dừa", "Xoài", "Rau muống"],
+        answer: ["Dừa", "Xoài"],
+        type: "multipleselect"
+      },
+
+    {
+        question: "Ai là người sáng lập Facebook?",
+        answer: "Mark Zuckerberg",
+        type: "truefalse"
+    },
+    {
+        question: "Thủ đô của Pháp là thành phố nào?",
+        answer: "Paris",
+        type: "truefalse"
+    },
+    {
+        question: "Nước nào là quốc gia đông dân nhất thế giới?",
+        answer: "Trung Quốc",
+        type: "truefalse"
+    },
+    {
+        question: "Bộ phim nào đã giành giải Oscar cho Phim xuất sắc nhất năm 2020?",
+        answer: "Parasite",
+        type: "truefalse"
+    },
+    {
+        question: "Ngôn ngữ chính thức của Brazil là gì?",
+        answer: "Bồ Đào Nha",
+        type: "truefalse"
+    },
+    {
+        question: "Element hóa học có ký hiệu là 'O' là gì?",
+        answer: "Oxygen",
+        type: "truefalse"
+    },
+    {
+        question: "Ai là tác giả của cuốn sách 'Harry Potter'?",
+        answer: "J.K. Rowling",
+        type: "truefalse"
+    },
+    {
+        question: "Đỉnh núi cao nhất thế giới là gì?",
+        answer: "Everest",
+        type: "truefalse"
+    },
+    {
+        question: "Đội bóng nào đã giành chiến thắng trong World Cup 2018?",
+        answer: "Pháp",
+        type: "truefalse"
+    },
+    {
+        question: "Năm nào là năm đầu tiên con người đặt chân lên mặt trăng?",
+        answer: "1969",
+        type: "truefalse"
+    },
+    // Các câu hỏi nhóm 4 (trả lời tự luận)
+    {
+        question: "Viết tên một loài động vật sống trong môi trường nước?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Nêu một ứng dụng của công nghệ Blockchain?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Mô tả một nguyên tố hóa học mà bạn biết?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Nói về một sự kiện lịch sử quan trọng mà bạn biết?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Mô tả một bộ phim mà bạn thích?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Nói về một công việc bạn muốn làm trong tương lai?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Mô tả một đất nước bạn muốn ghé thăm?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Nói về một sở thích cá nhân của bạn?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Viết về một bài hát mà bạn thích?",
+        answer: "",
+        type: "essay"
+    },
+    {
+        question: "Nói về một trải nghiệm đáng nhớ của bạn?",
+        answer: "",
+        type: "essay"
+    }
+
+      
+    ];
+    
+    // Hàm để hiển thị danh sách câu hỏi
+    function showQuestions() {
+        let questionsHTML = '';
+        questions.forEach((question, index) => {
+          questionsHTML += `<div class="question">`;
+          questionsHTML += `<h3>Câu hỏi ${index + 1}:</h3>`;
+          questionsHTML += `<p>${question.question}</p>`;
+          
+          if (question.type === "truefalse") {
+            questionsHTML += `
+              <label><input type="radio" name="question-${index}" value="true"> Đúng</label>
+              <label><input type="radio" name="question-${index}" value="false"> Sai</label>
+            `;
+          } else if (question.type === "multiplechoice") {
+            question.options.forEach((option, optionIndex) => {
+              questionsHTML += `
+                <label><input type="radio" name="question-${index}" value="${option}">${option}</label>
+              `;
+            });
+          } else if (question.type === "multipleselect") {
+            question.options.forEach((option, optionIndex) => {
+              questionsHTML += `
+                <label><input type="checkbox" name="question-${index}" value="${option}">${option}</label>
+              `;
+            });
+          } else if (question.type === "essay") {
+            questionsHTML += `
+              <textarea id="essay-${index}" rows="4" cols="50" placeholder="Nhập câu trả lời của bạn..."></textarea>
+            `;
+          }
+          
+          questionsHTML += `</div>`;
+        });
+        questionsList.innerHTML = questionsHTML;
+      }
+
+    // Hàm để xử lý và hiển thị kết quả
+    function submitAnswers() {
+        const questionInputs = document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked');
+        questionContainer.style.display = 'none';
+        resultContainer.style.display = 'block';
+      
+        let score = 0;
+        let resultHTML = '';
+        questions.forEach((question, index) => {
+          const answeredInput = Array.from(questionInputs).find(input => input.name === `question-${index}`);
+          const userAnswer = answeredInput ? answeredInput.value : ''; // Lấy giá trị của câu trả lời hoặc rỗng nếu không có câu trả lời
+          let isCorrect = false;
+      
+          if (userAnswer === '' || userAnswer === null) {
+            // Nếu không có câu trả lời, hoặc người dùng không trả lời, mặc định là câu trả lời sai
+            isCorrect = false;
+          } else {
+            if (Array.isArray(question.answer)) {
+              isCorrect = question.answer.includes(userAnswer);
+            } else {
+              isCorrect = userAnswer === question.answer;
+            }
+          }
+      
+          if (isCorrect) {
+            score += 0.25; // Tăng điểm 0.25 cho mỗi câu trả lời đúng
+          }
+          
+          const resultText = isCorrect ? "Đúng" : "Sai";
+          const resultColor = isCorrect ? "green" : "red";
+          resultHTML += `<p>Câu hỏi ${index + 1}: ${resultText}</p>`;
+        });
+      
+        resultHTML += `<p>Điểm của bạn: ${score.toFixed(2)}</p>`;
+        answersContainer.innerHTML = resultHTML;
+      }
+      
+      
+      
+
+    // Bắt đầu hiển thị danh sách câu hỏi
+    showQuestions();
+  </script>
+</body>
+</html>
