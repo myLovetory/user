@@ -1,5 +1,6 @@
 /* Các đối tượng trong trang */
 body {
+    background-image: url("background.jpg");
     font-family: Arial, sans-serif;
     background-color: #f0f0f0; /* Màu nền của trang */
     margin: 0;
